@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		
-		<view class="intro">大鸡腿</view>
+		<view class="intro">大鸡腿1</view>
 		<text class="intro">详见：</text>
 		<uni-link :href="href" :text="href"></uni-link>
 	</view>
