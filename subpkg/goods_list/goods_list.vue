@@ -1,6 +1,6 @@
 <template>
   <view>
-    分类
+    商品列表
   </view>
 </template>
 
@@ -8,7 +8,6 @@
   export default {
     data() {
       return {
-
 
       };
     }
