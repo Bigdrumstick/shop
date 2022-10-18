@@ -1,37 +1,31 @@
 {
   "pages": [{
-    "path": "pages/home/home",
-    "style": {
-      "navigationBarTitleText": "",
-      "enablePullDownRefresh": false
-    }
+      "path": "pages/home/home",
+      "style": {
 
-  }, {
-    "path": "pages/cate/cate",
-    "style": {
-      "navigationBarTitleText": "",
-      "enablePullDownRefresh": false
-    }
+      }
 
-  }, {
-    "path": "pages/cart/cart",
-    "style": {
-      "navigationBarTitleText": "",
-      "enablePullDownRefresh": false}
+    }, {
+      "path": "pages/cate/cate",
+      "style": {
+
+      }
+
+    }, {
+      "path": "pages/cart/cart",
+      "style": {}
     },
-  {
-    "path": "pages/my/my",
-    "style": {
-      "navigationBarTitleText": "",
-      "enablePullDownRefresh": false
+    {
+      "path": "pages/my/my",
+      "style": {
+
+      }
     }
-  }
 
   ],
   "tabBar": {
     "selectedColor": "#C00000",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/home/home",
         "text": "首页",
         "iconPath": "/static/tab_icons/home.png",
@@ -62,6 +56,6 @@
     "navigationBarTitleText": "黑马优购",
     "navigationBarBackgroundColor": "#C00000",
     "backgroundColor": "#FFF"
-    
+
   }
 }
