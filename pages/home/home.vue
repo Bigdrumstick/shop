@@ -79,7 +79,7 @@
         const {
           data: res
         } = await uni.$http.get("/api/public/v1/home/catitems")
-        console.log(res);
+        // console.log(res);
         this.navList = res.message
         if (res.meta.status !== 200) return uni.$showMsg()
       },
@@ -96,8 +96,8 @@
         const {
           data: res
         } = await uni.$http.get("/api/public/v1/home/floordata")
-        console.log(res);
-
+        // console.log(res);
+        if (res.meta.status !== 200) return uni.$showMsg()
         // 双层forEach循环得url。处理url
         res.message.forEach(floor => {
           floor.product_list.forEach(prod => {
