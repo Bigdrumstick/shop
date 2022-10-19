@@ -1,5 +1,9 @@
 <template>
   <view>
+    <!-- 使用自定义的搜索组件 -->
+    <view class="search-box">
+      <my-search @click="goToSearch"></my-search>
+    </view>
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" circular
       indicator-active-color="#C00000">
       <swiper-item v-for="(item,index) in swipersList" :key="item.id">
@@ -105,15 +109,34 @@
           })
         })
         this.floorList = res.message
+      },
+
+      // 在 home 首页定义如下的事件处理函数
+
+      goToSearch() {
+        uni.navigateTo({
+          url: "/subpkg/search/search"
+        })
       }
     },
-
 
 
   }
 </script>
 
 <style lang="scss">
+  // 通过如下的样式实现吸顶的效果：
+  .search-box {
+    // // 设置定位效果为“吸顶”
+    position: sticky;
+    // 定位吸顶位置
+    top: 0;
+    // 层级以防被覆盖// 提高层级，防止被轮播图覆盖
+    z-index: 999999;
+  }
+
+  ;
+
   swiper {
     height: 330rpx;
 

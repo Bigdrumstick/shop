@@ -1,6 +1,10 @@
 <template>
   <view>
+    <!-- 使用自定义组件 -->
+    <my-search @click="goToSearch"></my-search>
+
     <view class="scroll-view-container">
+
       <scroll-view scroll-y="true" class="left-scroll" :style="{height:wh+'px'}">
         <block v-for="(item,i) in cateList" :key="item.cat_id">
           <!--动态 渲染左侧滚动视图默认选中的 -->
@@ -53,7 +57,8 @@
     onLoad() {
       const sysInfo = uni.getSystemInfoSync()
       // console.log(sysInfo);
-      this.wh = sysInfo.windowHeight
+      // 由于自定义的 my-search 组件高度为 50px ，因此，需要重新计算分类页面窗口的可用高度
+      this.wh = sysInfo.windowHeight - 50
       this.getCateList()
     },
 
@@ -94,6 +99,14 @@
       //     url: '/subpkg/goods_list/goods_list?cid=' + item3.cat_id
       //   })
       // },
+      // 
+      // 点击自定义组件my-search去搜索页
+      goToSearch() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
+        })
+      }
+
 
     }
   }
