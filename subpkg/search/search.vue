@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="search-box">
-      <uni-search-bar @input="input" :radius="100" cancelButton="none" focus></uni-search-bar>
+      <uni-search-bar @input="input" :radius="100" cancelButton="none" focus @confirm="search"></uni-search-bar>
     </view>
     <view class="sugg-list"  v-if="searchResultList.length!==0">
       <navigator class="sugg-list-item" v-for="(item,i) in searchResultList" :key="item.goods_id" :url="'/subpkg/goods_detail/goods_detail?goods_id='+item.goods_id">
@@ -42,6 +42,7 @@
 this.historyList=JSON.parse(uni.getStorageSync('kw')||'[]')
     },
     methods: {
+      // input框发生改变时
       input(e) {
         // console.log(e);
         // 定义如下的 input 事件处理函数：
@@ -55,13 +56,31 @@ this.historyList=JSON.parse(uni.getStorageSync('kw')||'[]')
           // console.log(this.kw);
           // 发送搜索的请求
           this.getSearchResult()
-          //获取到关键词之后调用保存关键词的方法
-          this.saveHistory()
+          
         }, 500);
       },
+         
+         // 当点击手机搜索按钮时
+            search(v){
+           this.kw=v.value
+           // 发送搜索的请求
+           this.getSearchResult()
+           //获取到关键词之后调用保存关键词的方法
+            this.saveHistory()
+           // 如果关键词搜索得不到结果
+           if(this.searchResultList.length===0){
+             uni.showToast({
+               title:"没有相关结果",
+               duration:3000,
+               icon:'error'
+             })
+           }
+         },
 
+   
       async getSearchResult() {
         // 先判断搜索框有没有内容
+        //console.log("getSearchResult:Kw"+this.kw)
         if (this.kw === '') {
           this.searchResultList = []
           return
@@ -70,16 +89,10 @@ this.historyList=JSON.parse(uni.getStorageSync('kw')||'[]')
           data: res
         } = await uni.$http.get("/api/public/v1/goods/qsearch", { query: this.kw})
          // 将得到的数据赋值到列表
+          //console.log(res)
         this.searchResultList = res.message
-        // console.log(this.searchResultList);
-        // 如果关键词搜索得不到结果
-        if(this.searchResultList.length===0){
-          uni.showToast({
-            title:"没有相关结果",
-            duration:2000,
-            icon:'error'
-          })
-        }
+       
+        
        
       },
     // 点击搜索列表跳转到商品详情页
