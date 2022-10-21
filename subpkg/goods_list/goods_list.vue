@@ -37,6 +37,7 @@
       this.queryObj.cid=options.cid||''
       // 获取商品列表
       this.getGoodsList()
+      
     },
    
    
@@ -50,7 +51,7 @@
         // console.log(res);
         // 只要数据请求完毕，就立即按需调用 cb 回调函数
         cb && cb()
-        if(res.meta.status!==200)return uni.showMsg()
+        if(res.meta.status!==200)return uni.$showMsg()
         this.goodsList=[...this.goodsList,...res.message.goods]
         this.total=res.message.total
         

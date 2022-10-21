@@ -4,11 +4,12 @@
       <uni-search-bar @input="input" :radius="100" cancelButton="none" focus @confirm="search"></uni-search-bar>
     </view>
     <view class="sugg-list"  v-if="searchResultList.length!==0">
-      <navigator class="sugg-list-item" v-for="(item,i) in searchResultList" :key="item.goods_id" :url="'/subpkg/goods_detail/goods_detail?goods_id='+item.goods_id">
+      <view class="sugg-list-item" v-for="(item,i) in searchResultList" :key="item.goods_id" @click="gotoGoodsDetail(item)" >
         <view class="text">{{item.goods_name}}</view>
          <uni-icons type="arrowright" size="16" ></uni-icons>
-      </navigator>
+      </view>
     </view>
+    
     <!-- 搜索历史 -->
     <view class="history-box" v-else>
       <view class="history-title">
@@ -33,11 +34,11 @@
         // 搜索的结果列表
         searchResultList: [],
         // 先定义搜索的假数据
-        historyList:[]
-
+        historyList:[],
       };
     },
     onLoad() {
+  
 // 在 onLoad 生命周期函数中，加载本地存储的搜索历史记录：
 this.historyList=JSON.parse(uni.getStorageSync('kw')||'[]')
     },
@@ -61,12 +62,11 @@ this.historyList=JSON.parse(uni.getStorageSync('kw')||'[]')
       },
          
          // 当点击手机搜索按钮时
-            search(v){
+        search(v){
            this.kw=v.value
            // 发送搜索的请求
            this.getSearchResult()
-           //获取到关键词之后调用保存关键词的方法
-            this.saveHistory()
+           
            // 如果关键词搜索得不到结果
            if(this.searchResultList.length===0){
              uni.showToast({
@@ -74,10 +74,15 @@ this.historyList=JSON.parse(uni.getStorageSync('kw')||'[]')
                duration:3000,
                icon:'error'
              })
+           }else{
+             //获取到关键词之后调用保存关键词的方法
+              this.saveHistory()
            }
+           
+             
          },
 
-   
+   //获取搜索关键词列表
       async getSearchResult() {
         // 先判断搜索框有没有内容
         //console.log("getSearchResult:Kw"+this.kw)
@@ -85,22 +90,22 @@ this.historyList=JSON.parse(uni.getStorageSync('kw')||'[]')
           this.searchResultList = []
           return
         }
-        const {
-          data: res
-        } = await uni.$http.get("/api/public/v1/goods/qsearch", { query: this.kw})
+        // console.log(this.kw);
+        const {data:res} = await uni.$http.get("/api/public/v1/goods/qsearch", { query: this.kw})
+        // console.log(res);
          // 将得到的数据赋值到列表
-          //console.log(res)
+          // console.log(res)
+          if(res.meta.status!==200)return uni.$showMsg()
         this.searchResultList = res.message
-       
         
-       
       },
     // 点击搜索列表跳转到商品详情页
-    // goToDetail(goods_id){
-    //   uni.navigateTo({
-    //     url:'/subpkg/goods_detail/goods_detail?goods_id='+goods_id
-    //   })
-    // }
+    gotoGoodsDetail(item){
+      uni.navigateTo({
+        url:'/subpkg/goods_detail/goods_detail?goods_id='+item.goods_id
+      })
+      this.saveHistory(this.kw)
+    },
     // 保存关键词到历史记录
     saveHistory(){
       // this.historyList.push(this.kw)
@@ -128,13 +133,14 @@ this.historyList=JSON.parse(uni.getStorageSync('kw')||'[]')
     },
     
     // 点击历史记录的每一项跳转到响应的商品列表
-    gotoGoodsList(kw){
-      uni.navigateTo({
-        url:'/subpkg/goods_list/goods_list?query='+kw
-      })
-    }
+  gotoGoodsList(kw){
+    // console.log(kw);
+     uni.navigateTo({
+       url:'/subpkg/goods_list/goods_list?query='+kw
+     })
+        
     },
-    
+},
     computed: {
       // 将历史记录的顺序倒过来
       historys() {
