@@ -71,7 +71,7 @@
     }, {
       "path": "search/search",
       "style": {
-
+"onReachBottomDistance": 150
       }
 
     }]

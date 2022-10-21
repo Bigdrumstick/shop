@@ -59,8 +59,10 @@
       "minified": true
 
     },
+    "requiredPrivateInfos":["chooseAddress"],
     "usingComponents": true,
     "lazyCodeLoading": "requiredComponents"
+   
   },
   "vueVersion": "2"
 }
