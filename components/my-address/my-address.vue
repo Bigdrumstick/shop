@@ -10,7 +10,7 @@
       <view class="row1">
         <!-- 第一行左边 -->
         <view class="row1-left">
-        <view class="username">收货人:<text>{{address.userName}}</text></view>
+        <view class="username">收货人：<text>{{address.userName}}</text></view>
         </view>
         <view class="row1-right">
         <view class="phone">电话：<text>{{address.telNumber}}</text></view>
